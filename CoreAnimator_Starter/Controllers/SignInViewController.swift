@@ -31,6 +31,7 @@ class SignInViewController: UIViewController {
         super.viewDidAppear(animated)
         
         fadeInViews()
+        animateButtonWithSpring()
     }
     
     // MARK: User Actions
@@ -49,6 +50,25 @@ class SignInViewController: UIViewController {
         
         fade.beginTime = AnimationHelper.addDelay(time: 2.0)
         passwordField.layer.add(fade, forKey: nil)
+    }
+    
+    func animateButtonWithSpring() {
+        let moveUp = CASpringAnimation(keyPath: AnimationHelper.posY)
+        
+        // Add the screen height to the signInButton y value to position it off screen
+        moveUp.fromValue = signInButton.layer.position.y + AnimationHelper.screenBounds.height
+        moveUp.toValue = signInButton.layer.position.y
+        moveUp.duration = moveUp.settlingDuration
+        moveUp.beginTime = AnimationHelper.addDelay(time: 2.5)
+        moveUp.fillMode = kCAFillModeBackwards
+        
+        // Spring physics properties
+        moveUp.initialVelocity = 5
+        moveUp.mass = 1  // the heavier the mass, the longer this animation will run
+        moveUp.stiffness = 75
+        moveUp.damping = 12 // controls how long the animation lasts by simulating friction
+        
+        signInButton.layer.add(moveUp, forKey: nil)
     }
 }
 
