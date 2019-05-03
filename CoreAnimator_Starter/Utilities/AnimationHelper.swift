@@ -19,6 +19,7 @@ class AnimationHelper {
         fadeIn.fromValue = 0.0
         fadeIn.toValue = 1.0
         fadeIn.duration = 1.0 // one second
+        fadeIn.fillMode = kCAFillModeBackwards // immediately shows the first frame of the animation, even if the beginTime is set.
         return fadeIn
     }
     
