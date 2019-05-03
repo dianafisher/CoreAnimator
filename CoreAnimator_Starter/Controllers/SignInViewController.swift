@@ -30,8 +30,7 @@ class SignInViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        let fade = AnimationHelper.basicFadeAnimation()
-        titleLabel.layer.add(fade, forKey: nil)
+        fadeInViews()
     }
     
     // MARK: User Actions
@@ -40,6 +39,12 @@ class SignInViewController: UIViewController {
     }
     
     // MARK: Animations
+    func fadeInViews() {
+        let fade = AnimationHelper.basicFadeAnimation()
+        titleLabel.layer.add(fade, forKey: nil)
+        usernameField.layer.add(fade, forKey: nil)
+        passwordField.layer.add(fade, forKey: nil)
+    }
 }
 
 // MARK: Delegate Extensions
