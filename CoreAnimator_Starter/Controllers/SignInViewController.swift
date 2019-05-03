@@ -61,7 +61,13 @@ class SignInViewController: UIViewController {
         moveUp.duration = moveUp.settlingDuration
         moveUp.beginTime = AnimationHelper.addDelay(time: 2.5)
         moveUp.fillMode = kCAFillModeBackwards
-                
+        
+        // Spring physics properties
+        moveUp.initialVelocity = 5
+        moveUp.mass = 1  // the heavier the mass, the longer this animation will run
+        moveUp.stiffness = 75
+        moveUp.damping = 12 // controls how long the animation lasts by simulating friction
+        
         signInButton.layer.add(moveUp, forKey: nil)
     }
 }
