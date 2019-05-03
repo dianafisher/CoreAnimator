@@ -44,8 +44,10 @@ class SignInViewController: UIViewController {
         titleLabel.layer.add(fade, forKey: nil)
         
         // Add a delay of 1 second
-        fade.beginTime = CACurrentMediaTime() + 1.0
+        fade.beginTime = AnimationHelper.addDelay(time: 1)
         usernameField.layer.add(fade, forKey: nil)
+        
+        fade.beginTime = AnimationHelper.addDelay(time: 1)
         passwordField.layer.add(fade, forKey: nil)
     }
 }

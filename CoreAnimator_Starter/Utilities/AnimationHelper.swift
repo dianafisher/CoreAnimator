@@ -27,6 +27,10 @@ class AnimationHelper {
         return UIScreen.main.bounds
     }
     
+    static func addDelay(time: Double) -> CFTimeInterval {
+        return CACurrentMediaTime() + time
+    }
+    
     // MARK: Shapes
     static func squareShapeLayer() -> CAShapeLayer {
         let square = CAShapeLayer()
