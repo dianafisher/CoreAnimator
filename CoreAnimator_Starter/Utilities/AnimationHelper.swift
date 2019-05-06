@@ -13,6 +13,7 @@ class AnimationHelper {
     // MARK: Animatable Properties
     static var opacity = "opacity"
     static var posY = "position.y"
+    static var borderColor = "borderColor"
     
     // MARK: Common Animations
     static func basicFadeAnimation() -> CABasicAnimation {

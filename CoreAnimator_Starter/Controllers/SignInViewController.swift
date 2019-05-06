@@ -58,6 +58,10 @@ class SignInViewController: UIViewController {
     
     func animateButtonWithSpring() {
         let moveUp = CASpringAnimation(keyPath: AnimationHelper.posY)
+        moveUp.delegate = self
+        
+        moveUp.setValue("sign_in", forKey: "animation_name")
+        moveUp.setValue(signInButton.layer, forKey: "object_layer")
         
         // Add the screen height to the signInButton y value to position it off screen
         moveUp.fromValue = signInButton.layer.position.y + AnimationHelper.screenBounds.height
@@ -78,6 +82,15 @@ class SignInViewController: UIViewController {
         signInButton.layer.position.y -= AnimationHelper.screenBounds.height
         signInButton.layer.add(moveUp, forKey: nil)
     }
+    
+    func animateBorderColorPulse() -> CABasicAnimation {
+        let colorFade = CABasicAnimation(keyPath: AnimationHelper.borderColor)
+        colorFade.fromValue = UIColor.clear.cgColor
+        colorFade.toValue = UIColor.white.cgColor
+        colorFade.duration = 1.0
+        
+        return colorFade
+    }
 }
 
 // MARK: Delegate Extensions
@@ -93,6 +106,10 @@ extension SignInViewController: CAAnimationDelegate {
         switch animName {
         case "password":
             animateButtonWithSpring()
+        case "sign_in":
+            let animLayer = anim.value(forKey: "object_layer") as? CALayer
+            animLayer?.add(animateBorderColorPulse(), forKey: "borderColor_pulse")
+            print(animLayer?.animationKeys() ?? "No keys found...")
         default: break
         }
     }
