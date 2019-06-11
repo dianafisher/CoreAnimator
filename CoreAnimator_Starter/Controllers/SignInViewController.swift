@@ -88,6 +88,10 @@ class SignInViewController: UIViewController {
         colorFade.fromValue = UIColor.clear.cgColor
         colorFade.toValue = UIColor.white.cgColor
         colorFade.duration = 1.0
+        colorFade.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
+        colorFade.speed = 2
+        colorFade.repeatCount = .infinity
+        colorFade.autoreverses = true
         
         return colorFade
     }
