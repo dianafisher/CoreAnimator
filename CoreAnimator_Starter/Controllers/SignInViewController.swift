@@ -38,7 +38,9 @@ class SignInViewController: UIViewController {
     
     // MARK: User Actions
     @IBAction func SignInOnButtonPressed(_ sender: Any) {
-        segueToNextViewController(segueID: Constants.Segues.loadingVC, withDelay: 1.0)
+        animateButtonClick()
+        
+//        segueToNextViewController(segueID: Constants.Segues.loadingVC, withDelay: 1.0)
     }
     
     // MARK: Animations
@@ -94,6 +96,19 @@ class SignInViewController: UIViewController {
         colorFade.autoreverses = true
         
         return colorFade
+    }
+    
+    func animateButtonClick() {
+        let pop = CASpringAnimation(keyPath: AnimationHelper.scale)
+
+        pop.fromValue = 1.2  // increase of 20%
+        pop.toValue = 1
+        
+        pop.initialVelocity = 2
+        pop.damping = 10
+        pop.duration = pop.settlingDuration
+        
+        signInButton.layer.add(pop, forKey: "pop")
     }
 }
 

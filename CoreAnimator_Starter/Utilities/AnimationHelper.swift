@@ -14,6 +14,7 @@ class AnimationHelper {
     static var opacity = "opacity"
     static var posY = "position.y"
     static var borderColor = "borderColor"
+    static var scale = "transform.scale"
     
     // MARK: Common Animations
     static func basicFadeAnimation() -> CABasicAnimation {
