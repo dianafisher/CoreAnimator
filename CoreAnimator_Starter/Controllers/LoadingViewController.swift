@@ -15,6 +15,8 @@ class LoadingViewController: UIViewController {
     @IBOutlet weak var clockImage: UIImageView!
     @IBOutlet weak var setupLabel: UILabel!
     
+    // Rotation values: [0.0, .pi/2.0, Double.pi * 3/2, Double.pi * 2]
+    
     // MARK: Appearance
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -38,15 +40,22 @@ class LoadingViewController: UIViewController {
         titleAnimGroup.animations = [positionPulse(), scalePulse()]
         
         loadingLabel.layer.add(titleAnimGroup, forKey: "title_group")
-    
-        clockImage.layer.add(createKeyFrameColorAnimation(), forKey: "color_change")
-        
-        clockImage.layer.position = CGPoint(x: AnimationHelper.screenBounds.width + 200, y: AnimationHelper.screenBounds.height - 250)
-        clockImage.layer.add(bounceKeyframeAnimation(), forKey: "bounce")
-        
+            
+        let clockAnimationGroup = CAAnimationGroup()
+        clockAnimationGroup.duration = 3
+        clockAnimationGroup.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        clockAnimationGroup.repeatCount = .infinity
+        clockAnimationGroup.animations = [
+            createKeyFrameColorAnimation(),
+            bounceKeyframeAnimation(),
+            createKeyFrameRotationAnimation()]
+        clockImage.layer.add(clockAnimationGroup, forKey: "clock_group")
+
         delayForSeconds(delay: 2.0) {
             self.animateViewTransition()
         }
+        
+        segueToNextViewController(segueID: Constants.Segues.dashboardVC, withDelay: 3)
     }
     
     func positionPulse() -> CABasicAnimation {
@@ -65,11 +74,20 @@ class LoadingViewController: UIViewController {
         return scale
     }
     
+    func createKeyFrameRotationAnimation() -> CAKeyframeAnimation {
+        let rotate = CAKeyframeAnimation(keyPath: AnimationHelper.rotation)
+        
+        rotate.values = [0.0, .pi/2.0, Double.pi * 3/2, Double.pi * 2]
+        rotate.keyTimes = [0.0, 0.25, 0.5, 0.75, 1.0]
+        
+        return rotate
+    }
+    
     // MARK: Keyframe Animations
     func createKeyFrameColorAnimation() -> CAKeyframeAnimation {
         let colorChange = CAKeyframeAnimation(keyPath: AnimationHelper.borderColor)
-        colorChange.duration = 1.5
-        colorChange.beginTime = AnimationHelper.addDelay(time: 1.0)
+//        colorChange.duration = 1.5
+//        colorChange.beginTime = AnimationHelper.addDelay(time: 1.0)
         colorChange.values = [
             UIColor.white.cgColor,
             UIColor.yellow.cgColor,

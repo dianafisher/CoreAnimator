@@ -16,6 +16,7 @@ class AnimationHelper {
     static var borderColor = "borderColor"
     static var scale = "transform.scale"
     static var position = "position"
+    static var rotation = "transform.rotation"
     
     // MARK: Common Animations
     static func basicFadeAnimation() -> CABasicAnimation {
