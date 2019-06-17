@@ -40,6 +40,9 @@ class LoadingViewController: UIViewController {
         loadingLabel.layer.add(titleAnimGroup, forKey: "title_group")
     
         clockImage.layer.add(createKeyFrameColorAnimation(), forKey: "color_change")
+        
+        clockImage.layer.position = CGPoint(x: AnimationHelper.screenBounds.width + 200, y: AnimationHelper.screenBounds.height - 250)
+        clockImage.layer.add(bounceKeyframeAnimation(), forKey: "bounce")
     }
     
     func positionPulse() -> CABasicAnimation {
@@ -73,6 +76,22 @@ class LoadingViewController: UIViewController {
         colorChange.keyTimes = [0.0, 0.25, 0.75, 1.0] // always have to start with 0.0 and end with 1.0 (these are percentages)
         
         return colorChange
+    }
+    
+    func bounceKeyframeAnimation() -> CAKeyframeAnimation {
+        let bounce = CAKeyframeAnimation(keyPath: AnimationHelper.position)
+        
+        bounce.duration = 3.0
+        bounce.values = [
+            NSValue(cgPoint: CGPoint(x: 25, y: AnimationHelper.screenBounds.height - 25)), // lower left-hand corner of the screen
+            NSValue(cgPoint: CGPoint(x: 175, y: AnimationHelper.screenBounds.height - 100)),
+            NSValue(cgPoint: CGPoint(x: 325, y: AnimationHelper.screenBounds.height - 25)),
+            NSValue(cgPoint: CGPoint(x: AnimationHelper.screenBounds.width + 200, y: AnimationHelper.screenBounds.height - 250))
+        ]
+        
+        bounce.keyTimes = [0.0, 0.3, 0.6, 1.0]
+        
+        return bounce
     }
     
     // MARK: Transitions
