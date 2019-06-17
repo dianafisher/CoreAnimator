@@ -105,7 +105,7 @@ class SignInViewController: UIViewController {
         pop.toValue = 1
         
         pop.initialVelocity = 2
-        pop.damping = 10
+//        pop.damping = 10
         pop.duration = pop.settlingDuration
         
         signInButton.layer.add(pop, forKey: "pop")

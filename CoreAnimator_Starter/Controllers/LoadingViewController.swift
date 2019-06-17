@@ -28,9 +28,33 @@ class LoadingViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        let titleAnimGroup = CAAnimationGroup()
+        titleAnimGroup.duration = 1.5
+        titleAnimGroup.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        titleAnimGroup.repeatCount = .infinity
+        titleAnimGroup.autoreverses = true
+        
+        titleAnimGroup.animations = [positionPulse(), scalePulse()]
+        
+        loadingLabel.layer.add(titleAnimGroup, forKey: "title_group")
     }
     
-    // MARK: Group Animations
+    func positionPulse() -> CABasicAnimation {
+        let posY = CABasicAnimation(keyPath: AnimationHelper.posY)
+        posY.fromValue = loadingLabel.layer.position.y - 20
+        posY.toValue = loadingLabel.layer.position.y + 20
+        
+        return posY
+    }
+    
+    func scalePulse() -> CABasicAnimation {
+        let scale = CABasicAnimation(keyPath: AnimationHelper.scale)
+        scale.fromValue = 1.1
+        scale.toValue = 1
+        
+        return scale
+    }
     
     // MARK: Keyframe Animations
     
