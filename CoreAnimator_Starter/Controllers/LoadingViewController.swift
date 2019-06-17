@@ -38,6 +38,8 @@ class LoadingViewController: UIViewController {
         titleAnimGroup.animations = [positionPulse(), scalePulse()]
         
         loadingLabel.layer.add(titleAnimGroup, forKey: "title_group")
+    
+        clockImage.layer.add(createKeyFrameColorAnimation(), forKey: "color_change")
     }
     
     func positionPulse() -> CABasicAnimation {
@@ -57,6 +59,21 @@ class LoadingViewController: UIViewController {
     }
     
     // MARK: Keyframe Animations
+    func createKeyFrameColorAnimation() -> CAKeyframeAnimation {
+        let colorChange = CAKeyframeAnimation(keyPath: AnimationHelper.borderColor)
+        colorChange.duration = 1.5
+        colorChange.beginTime = AnimationHelper.addDelay(time: 1.0)
+        colorChange.values = [
+            UIColor.white.cgColor,
+            UIColor.yellow.cgColor,
+            UIColor.red.cgColor,
+            UIColor.black.cgColor
+        ]
+        
+        colorChange.keyTimes = [0.0, 0.25, 0.75, 1.0] // always have to start with 0.0 and end with 1.0 (these are percentages)
+        
+        return colorChange
+    }
     
     // MARK: Transitions
 }
