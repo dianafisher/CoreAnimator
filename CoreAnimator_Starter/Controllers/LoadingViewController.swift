@@ -43,6 +43,10 @@ class LoadingViewController: UIViewController {
         
         clockImage.layer.position = CGPoint(x: AnimationHelper.screenBounds.width + 200, y: AnimationHelper.screenBounds.height - 250)
         clockImage.layer.add(bounceKeyframeAnimation(), forKey: "bounce")
+        
+        delayForSeconds(delay: 2.0) {
+            self.animateViewTransition()
+        }
     }
     
     func positionPulse() -> CABasicAnimation {
@@ -95,6 +99,27 @@ class LoadingViewController: UIViewController {
     }
     
     // MARK: Transitions
+    func animateViewTransition() {
+        let viewTransition = CATransition()
+        
+        viewTransition.duration = 1.5
+        viewTransition.type = kCATransitionReveal
+        viewTransition.subtype = kCATransitionFromLeft // where the transition comes in from
+//        viewTransition.startProgress = 0.4
+//        viewTransition.endProgress = 0.8 // end the transtion before the animation completes at a certain percentage
+        
+        loadingLabel.layer.add(viewTransition, forKey: "reveal_left")
+        
+        // change layer properties AFTER the transtion
+//        loadingLabel.alpha = 0
+        
+        // transtion the setup label in
+        setupLabel.layer.add(viewTransition, forKey: "reveal_left")
+        
+        loadingLabel.isHidden = true
+        setupLabel.isHidden = false
+        
+    }
 }
 
 // MARK: Delegate Extensions
